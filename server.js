@@ -13,118 +13,12 @@ const PORT = 3000;
 // ========================================
 // CONFIGURATION
 // ========================================
-const GOOGLE_API_KEY = 'AIzaSyCL7Yymaedbvn3fS7tPhlbokPV7dwfrrfg';
+const GOOGLE_API_KEY = 'AIzaSyD4yYCGL3NiT_CXyw2K2Lc-TpIBXMAW458';
 const SEARCH_ENGINE_ID = 'f24b4438838a84878';
 
 // Initialize Gemini
 const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname)));
-
-// Configure multer for Vercel (Use MemoryStorage instead of DiskStorage)
-const storage = multer.memoryStorage(); // Store in memory (RAM)
-
-const upload = multer({
-    storage: storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
-    fileFilter: (req, file, cb) => {
-        const allowedTypes = /jpeg|jpg|png|gif|pdf|txt|doc|docx/;
-        const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-        const mimetype = allowedTypes.test(file.mimetype);
-
-        if (mimetype && extname) {
-            return cb(null, true);
-        } else {
-            cb(new Error('Only images, PDFs, and text files are allowed!'));
-        }
-    }
-});
-
-// ========================================
-// FILE UPLOAD & ANALYSIS ENDPOINT
-// ========================================
-app.post('/api/analyze-file', upload.single('file'), async (req, res) => {
-    console.log('📁 Received file upload request');
-
-    try {
-        if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded' });
-        }
-
-        const fileType = req.file.mimetype;
-        const userQuestion = req.body.question || 'Analyze this file and tell me what you see.';
-
-        console.log(`📄 File: ${req.file.originalname}, Type: ${fileType}`);
-
-        // Get file buffer directly from memory
-        const fileBuffer = req.file.buffer;
-        const base64File = fileBuffer.toString('base64');
-
-        // Use Gemini Vision model for image analysis
-        const visionModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-        let response;
-        if (fileType.startsWith('image/')) {
-            // Image analysis
-            const imagePart = {
-                inlineData: {
-                    data: base64File,
-                    mimeType: fileType
-                }
-            };
-
-            const prompt = `You are Mady AI. Analyze this image QUICKLY and ACCURATELY.
-
-User Question: "${userQuestion}"
-
-Provide a CONCISE but COMPLETE analysis covering:
-1. Main subject/objects
-2. Key details and text (if any)
-3. Colors, composition, context
-4. Direct answer to the user's question
-
-Be fast, accurate, and helpful. Keep it under 150 words unless more detail is specifically requested.`;
-
-            response = await visionModel.generateContent([prompt, imagePart]);
-        } else if (fileType === 'application/pdf' || fileType.startsWith('text/')) {
-            // Text/PDF analysis
-            const textContent = fileBuffer.toString('utf-8');
-            const prompt = `You are Mady AI. Analyze this document QUICKLY and give an ACCURATE answer.
-
-User Question: "${userQuestion}"
-
-Document: ${textContent.substring(0, 5000)}
-
-Provide a CONCISE summary and answer the question directly. Be accurate and helpful.`;
-
-            response = await visionModel.generateContent(prompt);
-        }
-
-        const analysisResult = response.response.text();
-
-        // No need to unlink file since we used memory storage
-
-        res.json({
-            success: true,
-            analysis: analysisResult,
-            fileName: req.file.originalname,
-            fileType: fileType
-        });
-
-    } catch (error) {
-        console.error('❌ File analysis error:', error);
-        res.status(500).json({
-            error: 'Failed to analyze file',
-            details: error.message
-        });
-    }
-});
-
-// ========================================
 // INTELLIGENT CHAT ENDPOINT
 // ========================================
 app.post('/api/intelligent-chat', async (req, res) => {
