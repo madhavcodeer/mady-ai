@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mady AI - Your Intelligent Companion</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Highlight.js -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Plus Button Styling */
+        .btn-plus {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 8px;
+        }
+
+        .btn-plus:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.05);
+        }
+
+        .btn-plus i {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /* Voice Button Active State */
+        .btn-voice-active {
+            background: var(--primary) !important;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Input Container Layout */
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-container textarea {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background -->
+    <div class="ambient-background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- Landing Page -->
+    <section id="landing-page" class="landing-section active">
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo-container">
+                    <img src="images/logo.svg" alt="Mady AI" class="logo" style="width: 40px; height: 40px;">
+                    <span class="logo-text">Mady AI</span>
+                </div>
+                <div class="nav-links">
+                    <button class="btn-primary" onclick="startChat()">Launch App</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="badge-new">✨ Gemini 2.0 Powered</div>
+                <h1 class="hero-title">The Future of <br><span class="text-gradient">Intelligent Chat</span></h1>
+                <p class="hero-description">Experience AI-powered conversations with file upload and voice input
+                    capabilities.</p>
+                <div class="hero-cta">
+                    <button class="btn-hero" onclick="startChat()">
+                        Try Mady AI <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat App -->
+    <div id="chat-app" class="chat-app">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="images/logo.svg" alt="Mady AI" class="logo-small" style="width: 30px; height: 30px;">
+                    <span class="logo-text">Mady AI</span>
+                </div>
+                <button class="btn-icon" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+
+            <button class="btn-new-chat" onclick="startNewChat()">
+                <i class="fas fa-plus"></i> New Chat
+            </button>
+
+            <div class="chat-history">
+                <div class="history-title">Recent</div>
+                <div class="history-list" id="history-list"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button class="sidebar-btn" onclick="showLanding()">
+                    <i class="fas fa-sign-out-alt"></i> Exit
+                </button>
+            </div>
+        </aside>
+
+        <main class="chat-main">
+            <header class="chat-header">
+                <button class="btn-icon mobile-menu" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="chat-title">Mady AI <span class="status-badge">Online</span></div>
+                <div class="header-actions">
+                    <button class="btn-icon" title="Clear Chat" onclick="clearChat()">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div id="chat-container" class="chat-container">
+                <div class="chat-welcome">
+                    <img src="images/logo.svg" alt="Mady AI" class="logo-large" style="width: 80px; height: 80px;">
+                    <h2>How can I help you today?</h2>
+                    <p>Upload files, use voice input, or type your questions!</p>
+                </div>
+                <div id="chat-messages"></div>
+            </div>
+
+            <div class="input-area">
+                <div class="input-container">
+                    <button class="btn-plus" title="Upload File"
+                        onclick="document.getElementById('file-input').click()">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <textarea id="user-input" placeholder="Ask anything..." rows="1"
+                        oninput="autoResize(this)"></textarea>
+                    <div class="input-actions">
+                        <button class="btn-icon" id="voice-btn" title="Voice Input" onclick="toggleVoiceInput()">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button class="btn-send" onclick="handleUserInput()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="input-footer">
+                    Mady AI can make mistakes. Verify important information.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden File Input -->
+    <input type="file" id="file-input" style="display: none" accept="image/*,.pdf,.txt,.doc,.docx"
+        onchange="handleFileUpload(this)">
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="madyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#DC2626;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#991B1B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Outer hexagon -->
+  <path d="M60 10 L95 32.5 L95 77.5 L60 100 L25 77.5 L25 32.5 Z" 
+        stroke="url(#madyGradient)" 
+        stroke-width="3" 
+        fill="none"
+        filter="url(#glow)"/>
+  
+  <!-- Inner hexagon -->
+  <path d="M60 25 L82.5 37.5 L82.5 67.5 L60 80 L37.5 67.5 L37.5 37.5 Z" 
+        fill="url(#madyGradient)" 
+        opacity="0.2"/>
+  
+  <!-- M letter stylized -->
+  <path d="M40 45 L40 70 M40 45 L50 60 M50 60 L60 45 M60 45 L60 70" 
+        stroke="#FFFFFF" 
+        stroke-width="4" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        fill="none"/>
+  
+  <!-- AI circuit nodes -->
+  <circle cx="70" cy="50" r="3" fill="url(#madyGradient)"/>
+  <circle cx="80" cy="55" r="3" fill="url(#madyGradient)"/>
+  <circle cx="75" cy="65" r="3" fill="url(#madyGradient)"/>
+  
+  <!-- Circuit connections -->
+  <line x1="70" y1="50" x2="80" y2="55" stroke="url(#madyGradient)" stroke-width="1.5"/>
+  <line x1="80" y1="55" x2="75" y2="65" stroke="url(#madyGradient)" stroke-width="1.5"/>
+  <line x1="60" y1="55" x2="70" y2="50" stroke="url(#madyGradient)" stroke-width="1.5"/>
+  
+  <!-- Animated pulse ring -->
+  <circle cx="60" cy="55" r="35" 
+          stroke="url(#madyGradient)" 
+          stroke-width="2" 
+          fill="none" 
+          opacity="0.3">
+    <animate attributeName="r" 
+             values="35;40;35" 
+             dur="2s" 
+             repeatCount="indefinite"/>
+    <animate attributeName="opacity" 
+             values="0.3;0.1;0.3" 
+             dur="2s" 
+             repeatCount="indefinite"/>
+  </circle>
+</svg>

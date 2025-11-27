@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mady AI - API Key Setup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1F2937 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10B981;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        }
+
+        .info {
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3B82F6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .checkmark {
+            font-size: 4rem;
+            color: #10B981;
+            margin-bottom: 20px;
+        }
+
+        .settings-preview {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .settings-preview div {
+            margin: 5px 0;
+        }
+
+        .label {
+            color: #9CA3AF;
+        }
+
+        .value {
+            color: #10B981;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔑 API Key Setup</h1>
+        <p style="color: #9CA3AF; margin-bottom: 30px;">Configuring Mady AI with your OpenAI API key</p>
+
+        <div id="setupContent">
+            <div class="info">
+                <strong>⚡ Quick Setup</strong><br>
+                Click the button below to automatically configure your API key
+            </div>
+
+            <button class="btn" onclick="setupApiKey()">
+                🚀 Configure API Key
+            </button>
+
+            <div class="info" style="margin-top: 30px;">
+                <strong>🔒 Security Note:</strong><br>
+                Your API key will be stored locally in your browser only.<br>
+                It will never be sent to any server except OpenAI's API.
+            </div>
+        </div>
+
+        <div id="successContent" class="success">
+            <div class="checkmark">✅</div>
+            <h2 style="color: #10B981; margin-bottom: 15px;">Setup Complete!</h2>
+            <p style="margin-bottom: 20px;">Your API key has been configured successfully.</p>
+
+            <div class="settings-preview">
+                <div><span class="label">API Key:</span> <span class="value">sk-proj-****...zpAA</span></div>
+                <div><span class="label">Model:</span> <span class="value">gpt-4</span></div>
+                <div><span class="label">Temperature:</span> <span class="value">0.7</span></div>
+                <div><span class="label">Theme:</span> <span class="value">dark</span></div>
+            </div>
+
+            <a href="index.html" class="btn">
+                🎉 Start Chatting with Mady AI
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function setupApiKey() {
+            // Configure the API key and settings
+            const settings = {
+                apiKey: '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',
+                model: 'gpt-4',
+                temperature: 0.7,
+                theme: 'dark'
+            };
+
+            // Store in localStorage
+            localStorage.setItem('madyai_settings', JSON.stringify(settings));
+
+            // Show success message
+            document.getElementById('setupContent').style.display = 'none';
+            document.getElementById('successContent').classList.add('show');
+
+            // Optional: Auto-redirect after 3 seconds
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 3000);
+        }
+
+        // Check if already configured
+        window.addEventListener('DOMContentLoaded', () => {
+            const existingSettings = localStorage.getItem('madyai_settings');
+            if (existingSettings) {
+                const settings = JSON.parse(existingSettings);
+                if (settings.apiKey) {
+                    // Already configured, show success
+                    document.getElementById('setupContent').style.display = 'none';
+                    document.getElementById('successContent').classList.add('show');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

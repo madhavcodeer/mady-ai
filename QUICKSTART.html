@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mady AI - Quick Start Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0A0A0A 0%, #1F2937 100%);
+            color: white;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(31, 41, 55, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            color: #DC2626;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+
+        h3 {
+            color: #EF4444;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .step {
+            background: rgba(220, 38, 38, 0.1);
+            border-left: 4px solid #DC2626;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #DC2626;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        code {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #EF4444;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            margin: 20px 10px 20px 0;
+            transition: transform 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+        }
+
+        .warning {
+            background: rgba(239, 68, 68, 0.2);
+            border: 1px solid #DC2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid #10B981;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        ul {
+            margin-left: 30px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            background: rgba(220, 38, 38, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .emoji {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 Mady AI</h1>
+        <p style="font-size: 1.2rem; color: #6B7280; margin-bottom: 30px;">Quick Start Guide - Get chatting in 3
+            minutes!</p>
+
+        <div class="success">
+            <strong>✅ Server is Running!</strong><br>
+            Your application is live at: <code>http://localhost:8000</code>
+        </div>
+
+        <h2>🚀 Getting Started</h2>
+
+        <div class="step">
+            <h3><span class="step-number">1</span> Open the Application</h3>
+            <p>Click the button below or navigate to:</p>
+            <a href="http://localhost:8000" class="btn" target="_blank">🌐 Open Mady AI</a>
+            <p style="margin-top: 10px;"><code>http://localhost:8000</code></p>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">2</span> Get Your OpenAI API Key</h3>
+            <p>You need an OpenAI API key to use the chatbot:</p>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Visit <a href="https://platform.openai.com/api-keys" target="_blank" style="color: #EF4444;">OpenAI
+                        API Keys</a></li>
+                <li>Sign in or create an account</li>
+                <li>Click "Create new secret key"</li>
+                <li>Copy the key (starts with <code>sk-...</code>)</li>
+            </ol>
+            <div class="warning" style="margin-top: 15px;">
+                <strong>⚠️ Important:</strong> Keep your API key private! Never share it publicly.
+            </div>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">3</span> Configure Mady AI</h3>
+            <ol style="margin-left: 20px; margin-top: 10px;">
+                <li>Click <strong>"Try Mady AI"</strong> button on the landing page</li>
+                <li>Click the <strong>Settings</strong> icon (⚙️) in the sidebar</li>
+                <li>Paste your API key in the <strong>"OpenAI API Key"</strong> field</li>
+                <li>Select your preferred model:
+                    <ul>
+                        <li><strong>GPT-4</strong> - Most capable, best quality (recommended)</li>
+                        <li><strong>GPT-3.5 Turbo</strong> - Faster, more affordable</li>
+                    </ul>
+                </li>
+                <li>Adjust temperature (0.7 is balanced)</li>
+                <li>Click <strong>"Save Settings"</strong></li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3><span class="step-number">4</span> Start Chatting!</h3>
+            <p>You're all set! Now you can:</p>
+            <ul>
+                <li>Type messages in the input box</li>
+                <li>Press <strong>Enter</strong> to send</li>
+                <li>Use <strong>Shift + Enter</strong> for new lines</li>
+                <li>Click the <strong>microphone icon</strong> for voice input</li>
+                <li>Try the suggested prompts for inspiration</li>
+            </ul>
+        </div>
+
+        <h2>✨ Features Overview</h2>
+
+        <div class="feature-grid">
+            <div class="feature">
+                <div class="emoji">💬</div>
+                <strong>Natural Chat</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Context-aware conversations</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">🎨</div>
+                <strong>Premium Design</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Glassmorphism UI</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">🎤</div>
+                <strong>Voice Input</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Speak your messages</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">💾</div>
+                <strong>Chat History</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Auto-saved locally</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">📥</div>
+                <strong>Export Chats</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Download as Markdown</p>
+            </div>
+            <div class="feature">
+                <div class="emoji">⚡</div>
+                <strong>Fast & Smooth</strong>
+                <p style="font-size: 0.9rem; color: #9CA3AF; margin-top: 5px;">Optimized animations</p>
+            </div>
+        </div>
+
+        <h2>🎯 Pro Tips</h2>
+
+        <ul>
+            <li><strong>Be Specific:</strong> Clear prompts get better responses</li>
+            <li><strong>Use GPT-4:</strong> For complex tasks and best quality</li>
+            <li><strong>Adjust Temperature:</strong>
+                <ul>
+                    <li>Low (0.3) = Factual, consistent</li>
+                    <li>Medium (0.7) = Balanced</li>
+                    <li>High (0.9) = Creative, varied</li>
+                </ul>
+            </li>
+            <li><strong>Export Important Chats:</strong> Click the download icon in the header</li>
+            <li><strong>Regenerate:</strong> Hover over AI messages to regenerate responses</li>
+        </ul>
+
+        <h2>🐛 Troubleshooting</h2>
+
+        <h3>API Key Not Working?</h3>
+        <ul>
+            <li>Ensure it starts with <code>sk-</code></li>
+            <li>Check you have credits in your OpenAI account</li>
+            <li>Verify the key has proper permissions</li>
+        </ul>
+
+        <h3>Voice Input Not Working?</h3>
+        <ul>
+            <li>Grant microphone permissions when prompted</li>
+            <li>Use Chrome or Edge (best support)</li>
+            <li>Ensure you're using HTTPS or localhost</li>
+        </ul>
+
+        <h3>Messages Not Sending?</h3>
+        <ul>
+            <li>Check your internet connection</li>
+            <li>Verify API key is set correctly</li>
+            <li>Look for error notifications in top-right</li>
+        </ul>
+
+        <h2>📚 Documentation</h2>
+
+        <p>For complete documentation, see:</p>
+        <ul>
+            <li><strong>README.md</strong> - Full feature list and setup</li>
+            <li><strong>PROJECT_SUMMARY.md</strong> - Technical details</li>
+        </ul>
+
+        <div class="success" style="margin-top: 40px; text-align: center;">
+            <h3 style="color: #10B981; margin-bottom: 10px;">🎉 You're All Set!</h3>
+            <p>Enjoy your premium AI chatbot experience!</p>
+            <a href="http://localhost:8000" class="btn" target="_blank">🚀 Launch Mady AI</a>
+        </div>
+
+        <p
+            style="text-align: center; color: #6B7280; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1);">
+            Built with ❤️ using cutting-edge design principles<br>
+            <strong>Mady AI</strong> - Your Intelligent Companion
+        </p>
+    </div>
+</body>
+
+</html>
