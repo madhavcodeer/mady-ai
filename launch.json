@@ -1,0 +1,42 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Mady AI",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceFolder}/mady-ai"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug Mady AI Server",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/mady-ai/server.js",
+            "cwd": "${workspaceFolder}/mady-ai"
+        },
+        {
+            "name": "Attach to Chrome",
+            "port": 9222,
+            "request": "attach",
+            "type": "chrome",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Launch Ninja Racer (File)",
+            "type": "chrome",
+            "request": "launch",
+            "file": "${workspaceFolder}/ninja_racer/index.html"
+        },
+        {
+            "name": "Launch Ninja Racer (Localhost 8080)",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:8080/ninja_racer/index.html",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}

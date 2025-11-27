@@ -13,7 +13,7 @@ const PORT = 3000;
 // ========================================
 // CONFIGURATION
 // ========================================
-const GOOGLE_API_KEY = 'AIzaSyD4yYCGL3NiT_CXyw2K2Lc-TpIBXMAW458';
+const GOOGLE_API_KEY = 'AIzaSyCL7Yymaedbvn3fS7tPhlbokPV7dwfrrfg';
 const SEARCH_ENGINE_ID = 'f24b4438838a84878';
 
 // Initialize Gemini
@@ -25,15 +25,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
-// Configure multer for file uploads
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/');
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-    }
-});
+// Configure multer for Vercel (Use MemoryStorage instead of DiskStorage)
+const storage = multer.memoryStorage(); // Store in memory (RAM)
 
 const upload = multer({
     storage: storage,
@@ -51,12 +44,6 @@ const upload = multer({
     }
 });
 
-// Create uploads directory if it doesn't exist
-const uploadsDir = path.join(__dirname, 'uploads');
-if (!require('fs').existsSync(uploadsDir)) {
-    require('fs').mkdirSync(uploadsDir);
-}
-
 // ========================================
 // FILE UPLOAD & ANALYSIS ENDPOINT
 // ========================================
@@ -68,14 +55,13 @@ app.post('/api/analyze-file', upload.single('file'), async (req, res) => {
             return res.status(400).json({ error: 'No file uploaded' });
         }
 
-        const filePath = req.file.path;
         const fileType = req.file.mimetype;
         const userQuestion = req.body.question || 'Analyze this file and tell me what you see.';
 
         console.log(`📄 File: ${req.file.originalname}, Type: ${fileType}`);
 
-        // Read file as base64
-        const fileBuffer = await fs.readFile(filePath);
+        // Get file buffer directly from memory
+        const fileBuffer = req.file.buffer;
         const base64File = fileBuffer.toString('base64');
 
         // Use Gemini Vision model for image analysis
@@ -120,8 +106,7 @@ Provide a CONCISE summary and answer the question directly. Be accurate and help
 
         const analysisResult = response.response.text();
 
-        // Clean up uploaded file
-        await fs.unlink(filePath);
+        // No need to unlink file since we used memory storage
 
         res.json({
             success: true,
@@ -132,23 +117,12 @@ Provide a CONCISE summary and answer the question directly. Be accurate and help
 
     } catch (error) {
         console.error('❌ File analysis error:', error);
-
-        // Clean up file on error
-        if (req.file && req.file.path) {
-            try {
-                await fs.unlink(req.file.path);
-            } catch (unlinkError) {
-                console.error('Failed to delete file:', unlinkError);
-            }
-        }
-
         res.status(500).json({
             error: 'Failed to analyze file',
             details: error.message
         });
     }
 });
-
 
 // ========================================
 // INTELLIGENT CHAT ENDPOINT
@@ -303,8 +277,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(PORT, () => {
-    console.log(`
+// Start server only if not running on Vercel
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`
 ╔════════════════════════════════════════╗
 ║   🤖 MADY AI - GEMINI 2.0 POWERED 🤖  ║
 ╠════════════════════════════════════════╣
@@ -315,5 +291,9 @@ app.listen(PORT, () => {
 ║  Persona: Mady AI (Active)             ║
 ║                                        ║
 ╚════════════════════════════════════════╝
-    `);
-});
+        `);
+    });
+}
+
+// Export for Vercel
+module.exports = app;
